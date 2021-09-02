@@ -1,10 +1,13 @@
-// Copied from https://github.com/moben/qmk_firmware/blob/master/users/manna-harbour_miryoku/manna-harbour_miryoku.c
-// This is manna-harbour_miryoku's user file as modified by moben to support extra no tap-hold layers.
-
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "everglowz.h"
 #include "version.h"
+
+// Copied from https://github.com/moben/qmk_firmware/blob/master/users/manna-harbour_miryoku/manna-harbour_miryoku.c
+// This is manna-harbour_miryoku's user file as modified by moben to support extra no tap-hold layers.
+//
+// Evergloz mods:
+// - Added M_RGB_SAVE, M_RGB_RESET to media layer
 
 #define m_layout_expand(...) LAYOUT_miryoku(__VA_ARGS__)
 #define m_layout(x) [x] = m_layout_expand(MIRYOKU_TABLE_ ## x)
@@ -81,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
   ),
   [MEDIA] = LAYOUT_miryoku(
-    U_NU,    U_NU,    KC_VOLU, U_NU,    U_NU,    U_NA,    U_NA,    U_NA,    U_NA,    RESET,
+    M_RGB_RESET,    U_NU,    KC_VOLU, M_RGB_SAVE,    U_NU,    U_NA,    U_NA,    U_NA,    U_NA,    RESET,
     U_NU,    KC_MPRV, KC_VOLD, KC_MNXT, U_NU,    U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
     RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
     U_NP,    U_NP,    KC_MUTE, KC_MPLY, KC_MSTP, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
@@ -102,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [MEDIA] = LAYOUT_miryoku(
     RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
     KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,    U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-    U_NU,    U_NU,    U_NU,    U_NU,    U_NU,    U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
+    M_RGB_RESET,    U_NU,    U_NU,    M_RGB_SAVE,    U_NU,    U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
     U_NP,    U_NP,    KC_MUTE, KC_MPLY, KC_MSTP, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
   ),
   #endif
@@ -154,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [MEDIA] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,
-    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    U_NU,    U_NU,    U_NU,    U_NU,    U_NU,
+    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    M_RGB_SAVE,    U_NU,    U_NU,    U_NU,    M_RGB_RESET,
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
   ),
   #else
@@ -173,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [MEDIA] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    U_NU,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,
-    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    U_NU,    U_NU,    U_NU,    U_NU,    U_NU,
+    U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    M_RGB_SAVE,    U_NU,    U_NU,    U_NU,    M_RGB_RESET,
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
   ),
   #endif
@@ -216,11 +219,7 @@ void matrix_scan_leader(void) {
         leader_end();
 
         SEQ_TWO_KEYS(KC_K, KC_V) {
-            send_string_with_delay_P(PSTR(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " Built at: " QMK_BUILDDATE), TAP_CODE_DELAY);
-        }
-
-        SEQ_TWO_KEYS(KC_K, KC_B) {
-            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION ", Built on: " QMK_BUILDDATE);
+            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " [" QMK_BUILDDATE "]");
         }
 
         SEQ_TWO_KEYS(KC_G, KC_A) {
@@ -243,9 +242,15 @@ void matrix_scan_leader(void) {
 void matrix_scan_user(void) {
     #ifdef ENCODER_ENABLE
     if (is_alt_tab_active) {
-        if (timer_elapsed(alt_tab_timer) > 1000) {
+        if (timer_elapsed(alt_tab_timer) > 1250) {
             unregister_code(KC_LALT);
             is_alt_tab_active = false;
+        }
+    }
+    if (is_ctrl_tab_active) {
+        if (timer_elapsed(ctrl_tab_timer) > 1250) {
+            unregister_code(KC_LCTRL);
+            is_ctrl_tab_active = false;
         }
     }
     #endif

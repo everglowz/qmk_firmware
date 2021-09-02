@@ -9,15 +9,6 @@
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
 
-static void render_qmk_logo(void) {
-    static const char PROGMEM qmk_logo[] = {
-        0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-        0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-        0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
-
-    oled_write_P(qmk_logo, false);
-}
-
 void e_oled_white_space(void) {
     oled_write_P(PSTR(" "), false);
 }
@@ -32,11 +23,9 @@ static void e_render_layout_state(void) {
         case BASE:
             oled_write_P(PSTR("Colmak DH"), false);
             break;
-        #if defined QWERTY
         case QWERTY:
             oled_write_P(PSTR("Qwerty"), false);
             break;
-        #endif
         default:
             oled_write_P(PSTR("?"), false);
     }
@@ -113,10 +102,9 @@ static void e_render_layer_state(void) {
             // If we get here, we could have different default layers.
             if (layer_state_is(QWERTY)) {
                 oled_write_P(PSTR("Qwerty    "), false);
-                break;
+            } else {
+                oled_write_P(PSTR("Base      "), false);
             }
-
-            oled_write_P(PSTR("Base      "), false);
     }
 }
 
@@ -134,22 +122,25 @@ void e_render_mod_state(uint8_t modifiers) {
 static void e_render_keyboard_led_state(void) {
     oled_write_P(PSTR("\nLock: "), false);
     led_t led_state = host_keyboard_led_state();
-    oled_write_P(PSTR("NUM"), led_state.num_lock);
-    e_oled_white_space();
-    oled_write_P(PSTR("CAP"), led_state.caps_lock);
-    e_oled_white_space();
-    oled_write_P(PSTR("SCR"), led_state.scroll_lock);
+
+    const char* led_blank_str = PSTR("    ");
+    oled_write_P(led_state.num_lock ? PSTR("NUM ") : led_blank_str, false);
+    oled_write_P(led_state.caps_lock ? PSTR("CAP ") : led_blank_str, false);
+    oled_write_P(led_state.scroll_lock ? PSTR("SCR") : led_blank_str, false);
+
 }
 
 static void e_render_rgbled_status(void) {
     char string[4];
+
     if (RGBLIGHT_MODES > 1 && rgblight_is_enabled()) {
+        oled_write_P(PSTR("\nLED: "), false);
+
         uint16_t m = rgblight_get_mode();
         string[3] = '\0';
         string[2] = '0' + m % 10;
         string[1] = ( m /= 10) % 10 ? '0' + (m) % 10 : (m / 10) % 10 ? '0' : ' ';
         string[0] =  m / 10 ? '0' + m / 10 : ' ';
-        oled_write_P(PSTR("LED: "), false);
         oled_write(string, false);
         uint16_t h = rgblight_get_hue()/RGBLIGHT_HUE_STEP;
         string[3] = '\0';
@@ -190,13 +181,14 @@ static void render_primary_status(void) {
 }
 
 static void render_secondary_status(void) {
-    render_qmk_logo();
-    e_render_no_hold_state();
+    e_render_no_hold_state();   // BUGBUG: Does not work yet
     e_render_keyboard_led_state();
 
     #ifdef RGBLIGHT_ENABLE
-    e_render_rgbled_status();
+    e_render_rgbled_status();   // BUGBUG: When light on, slave OLED does not sleep?
     #endif
+
+    e_render_mod_state(get_mods());
 }
 
 void oled_task_user(void) {

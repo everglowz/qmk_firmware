@@ -9,8 +9,13 @@
 void left_encoder_cw(void) {
     switch (get_highest_layer(layer_state)) {
         case FUN:
-            // Switch between browser/editor tabs
-            tap_code16(C(KC_TAB));
+            // Switch between browser/editor tabs with ctrl tab.
+            if (!is_ctrl_tab_active) {
+                is_ctrl_tab_active = true;
+                register_code(KC_LCTRL);
+            }
+            ctrl_tab_timer = timer_read();
+            tap_code16(KC_TAB);
             break;
         default:
             // Switch between windows on Windows with alt tab.
@@ -27,11 +32,13 @@ void left_encoder_cw(void) {
 void left_encoder_ccw(void) {
     switch (get_highest_layer(layer_state)) {
         case FUN:
-            // Switch between browser/editor tabs
-            tap_code16(S(C(KC_TAB)));
+            // Switch between browser/editor tabs with ctrl tab.
+            ctrl_tab_timer = timer_read();
+            tap_code16(S(KC_TAB));
             break;
         default:
             // Switch between windows on Windows with alt tab.
+            alt_tab_timer = timer_read();
             tap_code16(S(KC_TAB));
             break;
         }
