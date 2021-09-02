@@ -19,10 +19,11 @@
   #define RGBLIGHT_LIMIT_VAL 150
   #define RGBLIGHT_SPLIT
 
-  // Animations I liked, let's pick 3 at a time
+  // Animations I liked
   // #define RGBLIGHT_EFFECT_RAINBOW_MOOD
   #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
   #define RGBLIGHT_EFFECT_KNIGHT
+  #define RGBLIGHT_EFFECT_SNAKE
   #define RGBLIGHT_EFFECT_TWINKLE
   // #define RGBLIGHT_EFFECT_BREATHING
 #endif
@@ -33,6 +34,11 @@
 
 
 // ----- Copied from thomasbaart keymap
+// Then modified to suit personal preferences.
+
+// The Leader key allows to flexibly assign macros to key sequences.
+#define LEADER_PER_KEY_TIMING
+#define LEADER_TIMEOUT 350
 
 // Allows media codes to properly register in macros and rotary encoder code
 #define TAP_CODE_DELAY 10
@@ -69,6 +75,8 @@
 #define ER0 XXX
 #define ER1 XXX
 #define ER2 XXX
+#define EXL XXX
+#define EXR KC_LEAD
 
 #define LAYOUT_miryoku( \
      K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, \
@@ -80,7 +88,7 @@ LAYOUT( \
 EL0, K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, ER0, \
 EL1, K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, ER1, \
 EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, ER2, \
-               DFG, K32, K33, K34, XXX,      XXX, K35, K36, K37, DFQ \
+               DFG, K32, K33, K34, EXL,      EXR, K35, K36, K37, DFQ \
 )
 
 
@@ -99,5 +107,5 @@ EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, 
 
 // Save memory
 #define NO_ACTION_ONESHOT     // saves 266 bytes
-#define NO_ACTION_TAPPING     // saves 1922 bytes
+//#define NO_ACTION_TAPPING     // saves 1922 bytes but I need mod-tap functionality
 

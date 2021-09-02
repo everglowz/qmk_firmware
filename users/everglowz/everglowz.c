@@ -4,6 +4,7 @@
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "everglowz.h"
+#include "version.h"
 
 #define m_layout_expand(...) LAYOUT_miryoku(__VA_ARGS__)
 #define m_layout(x) [x] = m_layout_expand(MIRYOKU_TABLE_ ## x)
@@ -25,37 +26,37 @@
 // These mean that it's impossible to add the BASE layer as a duplicate extra layer
 // But the advantage is that the base layer is always called 'BASE'
 #if defined MIRYOKU_LAYERS_FLIP
-  #if defined MIRYOKU_ALPHAS_COLEMAK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAK_FLIP
-  #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDHK_FLIP
-  #elif defined MIRYOKU_ALPHAS_DVORAK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_DVORAK_FLIP
-  #elif defined MIRYOKU_ALPHAS_HALMAK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_HALMAK_FLIP
-  #elif defined MIRYOKU_ALPHAS_WORKMAN
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_WORKMAN_FLIP
-  #elif defined MIRYOKU_ALPHAS_QWERTY
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_QWERTY_FLIP
-  #else
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDH_FLIP
-  #endif
+    #if defined MIRYOKU_ALPHAS_COLEMAK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAK_FLIP
+    #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDHK_FLIP
+    #elif defined MIRYOKU_ALPHAS_DVORAK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_DVORAK_FLIP
+    #elif defined MIRYOKU_ALPHAS_HALMAK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_HALMAK_FLIP
+    #elif defined MIRYOKU_ALPHAS_WORKMAN
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_WORKMAN_FLIP
+    #elif defined MIRYOKU_ALPHAS_QWERTY
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_QWERTY_FLIP
+    #else
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDH_FLIP
+    #endif
 #else
-  #if defined MIRYOKU_ALPHAS_COLEMAK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAK
-  #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDHK
-  #elif defined MIRYOKU_ALPHAS_DVORAK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_DVORAK
-  #elif defined MIRYOKU_ALPHAS_HALMAK
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_HALMAK
-  #elif defined MIRYOKU_ALPHAS_WORKMAN
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_WORKMAN
-  #elif defined MIRYOKU_ALPHAS_QWERTY
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_QWERTY
-  #else
-  #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDH
-  #endif
+    #if defined MIRYOKU_ALPHAS_COLEMAK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAK
+    #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDHK
+    #elif defined MIRYOKU_ALPHAS_DVORAK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_DVORAK
+    #elif defined MIRYOKU_ALPHAS_HALMAK
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_HALMAK
+    #elif defined MIRYOKU_ALPHAS_WORKMAN
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_WORKMAN
+    #elif defined MIRYOKU_ALPHAS_QWERTY
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_QWERTY
+    #else
+    #define MIRYOKU_TABLE_BASE MIRYOKU_TABLE_COLEMAKDH
+    #endif
 #endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -206,13 +207,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ================ END Miryoku code with moben mod
 
 
+#ifdef LEADER_ENABLE
+
+LEADER_EXTERNS();
+void matrix_scan_leader(void) {
+    LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
+
+        SEQ_TWO_KEYS(KC_K, KC_V) {
+            send_string_with_delay_P(PSTR(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " Built at: " QMK_BUILDDATE), TAP_CODE_DELAY);
+        }
+
+        SEQ_TWO_KEYS(KC_K, KC_B) {
+            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION ", Built on: " QMK_BUILDDATE);
+        }
+
+        SEQ_TWO_KEYS(KC_G, KC_A) {
+            SEND_STRING("git add .");
+        }
+        SEQ_TWO_KEYS(KC_G, KC_D) {
+            SEND_STRING("git diff");
+        }
+        SEQ_TWO_KEYS(KC_G, KC_L) {
+            SEND_STRING("git log");
+        }
+        SEQ_TWO_KEYS(KC_G, KC_S) {
+            SEND_STRING("git status");
+        }
+    }
+}
+
+#endif
+
 void matrix_scan_user(void) {
-  #ifdef ENCODER_ENABLE
+    #ifdef ENCODER_ENABLE
     if (is_alt_tab_active) {
         if (timer_elapsed(alt_tab_timer) > 1000) {
             unregister_code(KC_LALT);
             is_alt_tab_active = false;
         }
     }
-  #endif
+    #endif
+
+    #ifdef LEADER_ENABLE
+    matrix_scan_leader();
+    #endif
 }
