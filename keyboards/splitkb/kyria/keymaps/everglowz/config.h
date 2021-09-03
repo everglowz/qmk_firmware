@@ -8,24 +8,22 @@
 // Then modified to suit personal preferences.
 
 #ifdef OLED_ENABLE
-  #define OLED_DISPLAY_128X64
-  #define OLED_TIMEOUT 15000
+    #define OLED_DISPLAY_128X64
+    // #define OLED_TIMEOUT 15000
 #endif
 
 #ifdef RGBLIGHT_ENABLE
-  #define RGBLIGHT_HUE_STEP 8
-  #define RGBLIGHT_SAT_STEP 8
-  #define RGBLIGHT_VAL_STEP 8
-  #define RGBLIGHT_LIMIT_VAL 150
-  #define RGBLIGHT_SPLIT
+    #define RGBLIGHT_HUE_STEP 8
+    #define RGBLIGHT_SAT_STEP 8
+    #define RGBLIGHT_VAL_STEP 8
+    #define RGBLIGHT_LIMIT_VAL 150
+    #define RGBLIGHT_SPLIT
 
-  // Animations I liked
-  // #define RGBLIGHT_EFFECT_BREATHING
-  // #define RGBLIGHT_EFFECT_RAINBOW_MOOD
-  #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-  #define RGBLIGHT_EFFECT_KNIGHT
-  #define RGBLIGHT_MODE_CHRISTMAS
-  #define RGBLIGHT_EFFECT_TWINKLE
+    // Animations I liked
+    // #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
+    #define RGBLIGHT_EFFECT_KNIGHT          // 0,1,2
+    #define RGBLIGHT_EFFECT_CHRISTMAS       // none
+    #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
 #endif
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
@@ -80,10 +78,10 @@
 #define EXR KC_LEAD
 
 #define LAYOUT_miryoku( \
-     K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, \
-     K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, \
-     K20, K21, K22, K23, K24,                          K25, K26, K27, K28, K29, \
-     N30, N31, K32, K33, K34,                          K35, K36, K37, N38, N39 \
+    K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, \
+    K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, \
+    K20, K21, K22, K23, K24,                          K25, K26, K27, K28, K29, \
+    N30, N31, K32, K33, K34,                          K35, K36, K37, N38, N39 \
 ) \
 LAYOUT( \
 EL0, K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, ER0, \
@@ -96,14 +94,14 @@ EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, 
 // ----- everglowz specific settings
 
 #ifdef ENCODER_ENABLE
-  // My encoder rotation appears to be flipped (I connect to the left USB port if that matters).
-  // Some other Kyria keymaps also have this. My encoders are at the bottom row.
-  #define ENCODER_DIRECTION_FLIP
+    // My encoder rotation appears to be flipped (I connect to the left USB port if that matters).
+    // Some other Kyria keymaps also have this. My encoders are at the bottom row.
+    #define ENCODER_DIRECTION_FLIP
 
-  // EC11K encoders have a different resolution than other EC11 encoders.
-  // When using the default resolution of 4, if you notice your encoder skipping
-  // every other tick, lower the resolution to 2.
-  #define ENCODER_RESOLUTION 2
+    // EC11K encoders have a different resolution than other EC11 encoders.
+    // When using the default resolution of 4, if you notice your encoder skipping
+    // every other tick, lower the resolution to 2.
+    #define ENCODER_RESOLUTION 2
 #endif
 
 // Save memory

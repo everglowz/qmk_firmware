@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [MEDIA] = LAYOUT_miryoku(
     M_RGB_RESET,    U_NU,    KC_VOLU, M_RGB_SAVE,    U_NU,    U_NA,    U_NA,    U_NA,    U_NA,    RESET,
     U_NU,    KC_MPRV, KC_VOLD, KC_MNXT, U_NU,    U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-    RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
+    RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, M_RGB_TOGGLE, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
     U_NP,    U_NP,    KC_MUTE, KC_MPLY, KC_MSTP, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
   ),
   #else
@@ -103,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
   ),
   [MEDIA] = LAYOUT_miryoku(
-    RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
+    RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, M_RGB_TOGGLE, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
     KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,    U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
     M_RGB_RESET,    U_NU,    U_NU,    M_RGB_SAVE,    U_NU,    U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
     U_NP,    U_NP,    KC_MUTE, KC_MPLY, KC_MSTP, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
@@ -174,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
   ),
   [MEDIA] = LAYOUT_miryoku(
-    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
+    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    M_RGB_TOGGLE, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    U_NU,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,
     U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    M_RGB_SAVE,    U_NU,    U_NU,    U_NU,    M_RGB_RESET,
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
@@ -242,13 +242,13 @@ void matrix_scan_leader(void) {
 void matrix_scan_user(void) {
     #ifdef ENCODER_ENABLE
     if (is_alt_tab_active) {
-        if (timer_elapsed(alt_tab_timer) > 1250) {
+        if (timer_elapsed(alt_tab_timer) > 1000) {
             unregister_code(KC_LALT);
             is_alt_tab_active = false;
         }
     }
     if (is_ctrl_tab_active) {
-        if (timer_elapsed(ctrl_tab_timer) > 1250) {
+        if (timer_elapsed(ctrl_tab_timer) > 1000) {
             unregister_code(KC_LCTRL);
             is_ctrl_tab_active = false;
         }

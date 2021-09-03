@@ -19,7 +19,7 @@ void e_oled_slash_separator(void) {
 }
 
 static void e_render_layout_state(void) {
-    oled_write_P(PSTR("\nLayout: "), false);
+    oled_write_P(PSTR("Layout: "), false);
     switch (biton32(default_layer_state)) {
         case BASE:
             oled_write_P(PSTR("Colmak DH"), false);
@@ -42,12 +42,11 @@ static void e_render_no_hold_state(void) {
     oled_write_P(PSTR("QL"), layer_state_is(QWERTY_NO_HOLD_L));
     e_oled_white_space();
     oled_write_P(PSTR("QR"), layer_state_is(QWERTY_NO_HOLD_R));
-    e_oled_white_space();
 }
 
 #ifdef ENCODER_ENABLE
 static void e_render_encoder_state(void) {
-    oled_write_P(PSTR("\nEnc: "), false);
+    oled_write_P(PSTR("\n\nEnc: "), false);
 
     uint8_t layer = get_highest_layer(layer_state);
 
@@ -116,17 +115,12 @@ static void e_render_layer_state(void) {
             oled_write_P(PSTR("Functions "), true);
             break;
         default:
-            // If we get here, we could have different default layers.
-            if (layer_state_is(QWERTY)) {
-                oled_write_P(PSTR("Qwerty    "), false);
-            } else {
-                oled_write_P(PSTR("Base      "), false);
-            }
+            oled_write_P(PSTR("Base      "), false);
     }
 }
 
 void e_render_mod_state(uint8_t modifiers) {
-    oled_write_P(PSTR("\nMods: "), false);
+    oled_write_P(PSTR("\n\nMods: "), false);
     oled_write_P(PSTR("SHF"), (modifiers & MOD_MASK_SHIFT));
     e_oled_white_space();
     oled_write_P(PSTR("CTL"), (modifiers & MOD_MASK_CTRL));
@@ -170,33 +164,35 @@ static void e_render_rgbled_status(void) {
 }
 
 static void render_primary_status(void) {
-    oled_write_P(PSTR("Kyria rev1.0\n"), false);
 
-    e_render_layout_state();
-    e_render_no_hold_state();
+    e_render_layout_state();        // L1
+    e_render_no_hold_state();       // L2
 
     #ifdef ENCODER_ENABLE
-    e_render_encoder_state();
+    e_render_encoder_state();       // L3-4
     #endif
 
-    e_render_layer_state();
-    e_render_mod_state(get_mods());
+    e_render_layer_state();         // L5
+    e_render_mod_state(get_mods()); // L6-7
 }
 
 static void render_secondary_status(void) {
-    oled_write_P(PSTR("QMK "), false);
-    oled_write_P(PSTR(QMK_VERSION " " QMK_BUILDDATE), false);
-    // e_oled_white_space();
-    // oled_write_P(PSTR(QMK_BUILDDATE), false);
+    oled_write_P(PSTR("Kyria rev1.0\n"), false);    // L1
 
-    e_render_keyboard_led_state();
+    // build date e.g. 2021-09-03-00:25:17
+    oled_write_P(PSTR("v " QMK_VERSION "\n@" QMK_BUILDDATE "\n"), false);     // L2-4 if not dirty
+
+    e_render_keyboard_led_state();      // L5
 
     #ifdef RGBLIGHT_ENABLE
-    e_render_rgbled_status();
+    e_render_rgbled_status();           // L6-7
     #endif
 }
 
 void oled_task_user(void) {
+    // Limits for my 128x64 OLED display:
+    // 8? lines, 20 chars per line
+
     if (is_keyboard_master()) {
         render_primary_status();
     } else {
