@@ -8,54 +8,6 @@
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         #ifdef RGBLIGHT_ENABLE
-
-        // Override all the default RGB keys to not save to EEPROM.
-        case RGB_VAI:
-            if(record->event.pressed) {
-                rgblight_increase_val_noeeprom();
-            }
-            break;
-        case RGB_VAD:
-            if(record->event.pressed) {
-                rgblight_decrease_val_noeeprom();
-            }
-            break;
-        case RGB_SAI:
-            if(record->event.pressed) {
-                rgblight_increase_sat_noeeprom();
-            }
-            break;
-        case RGB_SAD:
-            if(record->event.pressed) {
-                rgblight_decrease_sat_noeeprom();
-            }
-            break;
-        case RGB_HUI:
-            if(record->event.pressed) {
-                rgblight_increase_hue_noeeprom();
-            }
-            break;
-        case RGB_HUD:
-            if(record->event.pressed) {
-                rgblight_decrease_hue_noeeprom();
-            }
-            break;
-        case RGB_TOG:
-            if(record->event.pressed) {
-                rgblight_toggle_noeeprom();
-            }
-            break;
-        case RGB_MOD:
-            if(record->event.pressed) {
-                rgblight_step_noeeprom();
-            }
-            break;
-        case RGB_RMOD:
-            if(record->event.pressed) {
-                rgblight_step_reverse_noeeprom();
-            }
-            break;
-
         // Save current RGB Light settings to EEPROM
         case M_RGB_SAVE:
             if (record->event.pressed) {

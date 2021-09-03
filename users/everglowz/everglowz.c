@@ -222,18 +222,18 @@ void matrix_scan_leader(void) {
             SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " [" QMK_BUILDDATE "]");
         }
 
-        SEQ_TWO_KEYS(KC_G, KC_A) {
-            SEND_STRING("git add .");
-        }
-        SEQ_TWO_KEYS(KC_G, KC_D) {
-            SEND_STRING("git diff");
-        }
-        SEQ_TWO_KEYS(KC_G, KC_L) {
-            SEND_STRING("git log");
-        }
-        SEQ_TWO_KEYS(KC_G, KC_S) {
-            SEND_STRING("git status");
-        }
+        // SEQ_TWO_KEYS(KC_G, KC_A) {
+        //     SEND_STRING("git add .");
+        // }
+        // SEQ_TWO_KEYS(KC_G, KC_D) {
+        //     SEND_STRING("git diff");
+        // }
+        // SEQ_TWO_KEYS(KC_G, KC_L) {
+        //     SEND_STRING("git log");
+        // }
+        // SEQ_TWO_KEYS(KC_G, KC_S) {
+        //     SEND_STRING("git status");
+        // }
     }
 }
 

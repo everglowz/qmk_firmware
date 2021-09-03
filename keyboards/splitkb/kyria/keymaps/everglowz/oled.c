@@ -4,8 +4,9 @@
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "everglowz.h"
+#include "version.h"
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
 
@@ -47,23 +48,39 @@ static void e_render_no_hold_state(void) {
 #ifdef ENCODER_ENABLE
 static void e_render_encoder_state(void) {
     oled_write_P(PSTR("\nEnc: "), false);
-    bool function = layer_state_is(FUN);
-    bool media = layer_state_is(MEDIA);
+
+    uint8_t layer = get_highest_layer(layer_state);
 
     // Left encoder
-    if (function) {
-        oled_write_P(PSTR("TABSW"), left_encoder_rotated);
-        e_oled_slash_separator();
-    } else {
-        oled_write_P(PSTR("APPSW"), left_encoder_rotated);
-        e_oled_slash_separator();
+    switch (layer) {
+        case SYM:
+            oled_write_P(PSTR("MOD  "), left_encoder_rotated);
+            break;
+        case NUM:
+            oled_write_P(PSTR("HUE  "), left_encoder_rotated);
+            break;
+        case FUN:
+            oled_write_P(PSTR("TABSW"), left_encoder_rotated);
+            break;
+        default:
+            oled_write_P(PSTR("APPSW"), left_encoder_rotated);
     }
 
+    e_oled_slash_separator();
+
     // Right encoder
-    if (media) {
-        oled_write_P(PSTR("VOL"), right_encoder_rotated);
-    } else {
-        oled_write_P(PSTR("PAGE"), right_encoder_rotated);
+    switch (layer) {
+        case MEDIA:
+            oled_write_P(PSTR("VOL  "), right_encoder_rotated);
+            break;
+        case NAV:
+            oled_write_P(PSTR("SAT  "), right_encoder_rotated);
+            break;
+        case MOUSE:
+            oled_write_P(PSTR("VAL  "), right_encoder_rotated);
+            break;
+        default:
+            oled_write_P(PSTR("PAGE"), right_encoder_rotated);
     }
 
     // Reset rotation state
@@ -130,47 +147,33 @@ static void e_render_keyboard_led_state(void) {
 
 }
 
-static void e_render_rgbled_status(void) {
+static void e_print_number(uint16_t m) {
     char string[4];
+    string[3] = '\0';
+    string[2] = '0' + m % 10;
+    string[1] = ( m /= 10) % 10 ? '0' + (m) % 10 : (m / 10) % 10 ? '0' : ' ';
+    string[0] =  m / 10 ? '0' + m / 10 : ' ';
+    oled_write(string, false);
+    e_oled_white_space();
+}
 
+static void e_render_rgbled_status(void) {
     if (RGBLIGHT_MODES > 1 && rgblight_is_enabled()) {
-        oled_write_P(PSTR("\nLED: "), false);
+        oled_write_P(PSTR("\nLED:"), false);
 
-        uint16_t m = rgblight_get_mode();
-        string[3] = '\0';
-        string[2] = '0' + m % 10;
-        string[1] = ( m /= 10) % 10 ? '0' + (m) % 10 : (m / 10) % 10 ? '0' : ' ';
-        string[0] =  m / 10 ? '0' + m / 10 : ' ';
-        oled_write(string, false);
-        uint16_t h = rgblight_get_hue()/RGBLIGHT_HUE_STEP;
-        string[3] = '\0';
-        string[2] = '0' + h % 10;
-        string[1] = ( h /= 10) % 10 ? '0' + (h) % 10 : (h / 10) % 10 ? '0' : ' ';
-        string[0] =  h / 10 ? '0' + h / 10 : ' ';
-        oled_write_P(PSTR(","), false);
-        oled_write(string, false);
-        uint16_t s = rgblight_get_sat()/RGBLIGHT_SAT_STEP;
-        string[3] = '\0';
-        string[2] = '0' + s % 10;
-        string[1] = ( s /= 10) % 10 ? '0' + (s) % 10 : (s / 10) % 10 ? '0' : ' ';
-        string[0] =  s / 10 ? '0' + s / 10 : ' ';
-        oled_write_P(PSTR(","), false);
-        oled_write(string, false);
-        uint16_t v = rgblight_get_val()/RGBLIGHT_VAL_STEP;
-        string[3] = '\0';
-        string[2] = '0' + v % 10;
-        string[1] = ( v /= 10) % 10 ? '0' + (v) % 10 : (v / 10) % 10 ? '0' : ' ';
-        string[0] =  v / 10 ? '0' + v / 10 : ' ';
-        oled_write_P(PSTR(","), false);
-        oled_write(string, false);
-        oled_write_ln_P(PSTR("\n     MOD HUE SAT VAL"), false);
+        e_print_number(rgblight_get_mode());
+        e_print_number(rgblight_get_hue()/RGBLIGHT_HUE_STEP);
+        e_print_number(rgblight_get_sat()/RGBLIGHT_SAT_STEP);
+        e_print_number(rgblight_get_val()/RGBLIGHT_VAL_STEP);
+        oled_write_ln_P(PSTR("\n    MOD HUE SAT VAL"), false);
     }
 }
 
 static void render_primary_status(void) {
-    oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+    oled_write_P(PSTR("Kyria rev1.0\n"), false);
 
     e_render_layout_state();
+    e_render_no_hold_state();
 
     #ifdef ENCODER_ENABLE
     e_render_encoder_state();
@@ -181,14 +184,16 @@ static void render_primary_status(void) {
 }
 
 static void render_secondary_status(void) {
-    e_render_no_hold_state();   // BUGBUG: Does not work yet
+    oled_write_P(PSTR("QMK "), false);
+    oled_write_P(PSTR(QMK_VERSION " " QMK_BUILDDATE), false);
+    // e_oled_white_space();
+    // oled_write_P(PSTR(QMK_BUILDDATE), false);
+
     e_render_keyboard_led_state();
 
     #ifdef RGBLIGHT_ENABLE
-    e_render_rgbled_status();   // BUGBUG: When light on, slave OLED does not sleep?
+    e_render_rgbled_status();
     #endif
-
-    e_render_mod_state(get_mods());
 }
 
 void oled_task_user(void) {
@@ -198,4 +203,5 @@ void oled_task_user(void) {
         render_secondary_status();
     }
 }
-#endif
+
+#endif  // OLED_ENABLE

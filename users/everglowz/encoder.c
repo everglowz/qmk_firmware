@@ -8,6 +8,18 @@
 #ifdef ENCODER_ENABLE
 void left_encoder_cw(void) {
     switch (get_highest_layer(layer_state)) {
+        case SYM:
+            #ifdef RGBLIGHT_ENABLE
+            // Forward mode step
+            rgblight_step_noeeprom();
+            #endif
+            break;
+        case NUM:
+            #ifdef RGBLIGHT_ENABLE
+            // Increase the hue
+            rgblight_increase_hue_noeeprom();
+            #endif
+            break;
         case FUN:
             // Switch between browser/editor tabs with ctrl tab.
             if (!is_ctrl_tab_active) {
@@ -31,6 +43,18 @@ void left_encoder_cw(void) {
 
 void left_encoder_ccw(void) {
     switch (get_highest_layer(layer_state)) {
+        case SYM:
+            #ifdef RGBLIGHT_ENABLE
+            // Reverse mode step
+            rgblight_step_reverse_noeeprom();
+            #endif
+            break;
+        case NUM:
+            #ifdef RGBLIGHT_ENABLE
+            // Decrease the hue
+            rgblight_decrease_hue_noeeprom();
+            #endif
+            break;
         case FUN:
             // Switch between browser/editor tabs with ctrl tab.
             ctrl_tab_timer = timer_read();
@@ -49,6 +73,18 @@ void right_encoder_cw(void) {
         case MEDIA:
             tap_code(KC_VOLU);
             break;
+        case NAV:
+            #ifdef RGBLIGHT_ENABLE
+            // Increase the intensity of the color
+            rgblight_increase_sat_noeeprom();
+            #endif
+            break;
+        case MOUSE:
+            #ifdef RGBLIGHT_ENABLE
+            // Increase the brightness
+            rgblight_increase_val_noeeprom();
+            #endif
+            break;
         default:
             tap_code(KC_PGDN);
             break;
@@ -59,6 +95,18 @@ void right_encoder_ccw(void) {
     switch (get_highest_layer(layer_state)) {
         case MEDIA:
             tap_code(KC_VOLD);
+            break;
+        case NAV:
+            #ifdef RGBLIGHT_ENABLE
+            // Decrease the intensity of the color
+            rgblight_decrease_sat_noeeprom();
+            #endif
+            break;
+        case MOUSE:
+            #ifdef RGBLIGHT_ENABLE
+            // Decrease the brightness
+            rgblight_decrease_val_noeeprom();
+            #endif
             break;
         default:
             tap_code(KC_PGUP);

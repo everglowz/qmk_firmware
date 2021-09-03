@@ -7,7 +7,7 @@
 // ----- Copied from default keymap
 // Then modified to suit personal preferences.
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
   #define OLED_DISPLAY_128X64
   #define OLED_TIMEOUT 15000
 #endif
@@ -20,12 +20,12 @@
   #define RGBLIGHT_SPLIT
 
   // Animations I liked
+  // #define RGBLIGHT_EFFECT_BREATHING
   // #define RGBLIGHT_EFFECT_RAINBOW_MOOD
   #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
   #define RGBLIGHT_EFFECT_KNIGHT
-  #define RGBLIGHT_EFFECT_SNAKE
+  #define RGBLIGHT_MODE_CHRISTMAS
   #define RGBLIGHT_EFFECT_TWINKLE
-  // #define RGBLIGHT_EFFECT_BREATHING
 #endif
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
@@ -110,3 +110,4 @@ EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, 
 #define NO_ACTION_ONESHOT     // saves 266 bytes
 //#define NO_ACTION_TAPPING     // saves 1922 bytes but I need mod-tap functionality
 
+#define SPLIT_LED_STATE_ENABLE
