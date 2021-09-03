@@ -23,6 +23,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
+        case M_RGB_TOGGLE:
+            if (record->event.pressed) {
+                rgblight_toggle_noeeprom();
+            }
+            break;
+
         #endif  // RGBLIGHT_ENABLE
 
         default:

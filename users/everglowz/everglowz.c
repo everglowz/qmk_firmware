@@ -7,7 +7,7 @@
 // This is manna-harbour_miryoku's user file as modified by moben to support extra no tap-hold layers.
 //
 // Evergloz mods:
-// - Added M_RGB_SAVE, M_RGB_RESET to media layer
+// - Added M_RGB_SAVE, M_RGB_RESET, M_RGB_TOGGLE to media layer
 
 #define m_layout_expand(...) LAYOUT_miryoku(__VA_ARGS__)
 #define m_layout(x) [x] = m_layout_expand(MIRYOKU_TABLE_ ## x)
@@ -155,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
   ),
   [MEDIA] = LAYOUT_miryoku(
-    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
+    RESET,   U_NA,    U_NA,    U_NA,    U_NA,    M_RGB_TOGGLE, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,
     U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    M_RGB_SAVE,    U_NU,    U_NU,    U_NU,    M_RGB_RESET,
     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
