@@ -134,6 +134,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
 
+#ifdef RGBLIGHT_ENABLE
+    post_encoder_update_rgb_light();
+#endif
+
     // Do not run keyboard level encoder behavior
     return false;
 }

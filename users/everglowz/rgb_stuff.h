@@ -14,5 +14,6 @@ bool rgb_time_out_enable;       // Idle LED toggle enable. If false then LED wil
 void matrix_init_rgb_light(void);
 void matrix_scan_rgb_light(void);
 bool process_record_user_rgb_light(uint16_t keycode, keyrecord_t *record);
+void post_encoder_update_rgb_light(void);
 
 #endif  // RGBLIGHT_ENABLE

@@ -10,7 +10,24 @@ static uint16_t idle_timer;             // Idle LED timeout timer
 static uint8_t idle_second_counter;     // Idle LED seconds counter, counts seconds not milliseconds
 static uint8_t key_event_counter;       // This counter is used to check if any keys are being held
 
+void reset_rgb_timer(void) {
+    if (rgb_time_out_enable) {
+        idle_timer = timer_read();
+        // Reset the seconds counter. Without this, something like press> leave x seconds> press, would be x seconds on the effective counter not 0 as it should.
+        idle_second_counter = 0;
+        if (!rgb_on) {
+            rgblight_enable_noeeprom();
+            rgb_on = true;
+        }
+    }
+}
+
 void matrix_init_rgb_light(void) {
+    // idle_timer needs to be set one time
+    if (idle_timer == 0) {
+        idle_timer = timer_read();
+    }
+
     idle_second_counter = 0;                        // Counter for number of seconds keyboard has been idle.
     key_event_counter = 0;                          // Counter to determine if keys are being held, neutral at 0.
     rgb_on = rgblight_is_enabled();
@@ -44,17 +61,13 @@ bool process_record_user_rgb_light(uint16_t keycode, keyrecord_t *record) {
         key_event_counter--;
     }
 
-    if (rgb_time_out_enable) {
-        idle_timer = timer_read();
-        // Reset the seconds counter. Without this, something like press> leave x seconds> press, would be x seconds on the effective counter not 0 as it should.
-        idle_second_counter = 0;
-        if (!rgb_on) {
-            rgblight_enable_noeeprom();
-            rgb_on = true;
-        }
-    }
+    reset_rgb_timer();
 
     return true;
+}
+
+void post_encoder_update_rgb_light(void) {
+    reset_rgb_timer();
 }
 
 #endif  // RGBLIGHT_ENABLE

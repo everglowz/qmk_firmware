@@ -230,11 +230,21 @@
     "D\nF3\n#\n3",
     {
       "x": 7,
-      "t": "#000000\n\n#ffff00\n#00ffff"
+      "t": "#000000\n\n#ffff00\n#00ffff\n\n\n#930093",
+      "fa": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
     },
-    "H\n\n⇦\nHome",
+    "H\n\n⇦\nHome\n\n\nRgbTmo",
     {
-      "x": 1
+      "x": 1,
+      "t": "#000000\n\n#ffff00\n#00ffff"
     },
     ".\n\n⇧\nPage Up"
   ],
