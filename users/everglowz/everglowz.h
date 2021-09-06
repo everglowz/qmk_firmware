@@ -8,6 +8,10 @@
     #include "encoder_stuff.h"
 #endif
 
+#ifdef RGBLIGHT_ENABLE
+    #include "rgb_stuff.h"
+#endif
+
 #ifdef OLED_ENABLE
     #include "oled_stuff.h"
 #endif

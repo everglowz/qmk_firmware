@@ -7,7 +7,7 @@
 // This is manna-harbour_miryoku's user file as modified by moben to support extra no tap-hold layers.
 //
 // Evergloz mods:
-// - Added M_RGB_SAVE, M_RGB_RESET, M_RGB_TOGGLE to media layer
+// - Added ER_SAV, ER_RST, ER_TOG to media layer
 
 #define m_layout_expand(...) LAYOUT_miryoku(__VA_ARGS__)
 #define m_layout(x) [x] = m_layout_expand(MIRYOKU_TABLE_ ## x)
@@ -62,6 +62,11 @@
     #endif
 #endif
 
+#define ER_RST M_RGB_RESET
+#define ER_SAV M_RGB_SAVE
+#define ER_TOG M_RGB_TOGGLE
+#define ER_TMO M_RGB_TIMEOUT_TOGGLE
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
     m_layout(BASE),
@@ -84,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
     ),
     [MEDIA] = LAYOUT_miryoku(
-        M_RGB_RESET,    U_NU,    KC_VOLU, M_RGB_SAVE,    U_NU,    U_NA,    U_NA,    U_NA,    U_NA,    RESET,
+        ER_RST,  U_NU,    KC_VOLU, ER_TMO,  ER_SAV,  U_NA,    U_NA,    U_NA,    U_NA,    RESET,
         U_NU,    KC_MPRV, KC_VOLD, KC_MNXT, U_NU,    U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, M_RGB_TOGGLE, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
+        RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, ER_TOG,  U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
         U_NP,    U_NP,    KC_MUTE, KC_MPLY, KC_MSTP, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
     ),
     #else
@@ -103,9 +108,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
     ),
     [MEDIA] = LAYOUT_miryoku(
-        RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, M_RGB_TOGGLE, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
+        RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, ER_TOG,  U_NA,    U_NA,    U_NA,    U_NA,    RESET,
         KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,    U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
-        M_RGB_RESET,    U_NU,    U_NU,    M_RGB_SAVE,    U_NU,    U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
+        ER_RST,  U_NU,    U_NU,    ER_TMO,  ER_SAV,  U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
         U_NP,    U_NP,    KC_MUTE, KC_MPLY, KC_MSTP, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
     ),
     #endif
@@ -155,9 +160,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
     ),
     [MEDIA] = LAYOUT_miryoku(
-        RESET,   U_NA,    U_NA,    U_NA,    U_NA,    M_RGB_TOGGLE, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
+        RESET,   U_NA,    U_NA,    U_NA,    U_NA,    ER_TOG,  RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,
-        U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    M_RGB_SAVE,    U_NU,    U_NU,    U_NU,    M_RGB_RESET,
+        U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    ER_SAV,  ER_TMO,  U_NU,    U_NU,    ER_RST,
         U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
     ),
     #else
@@ -174,9 +179,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
     ),
     [MEDIA] = LAYOUT_miryoku(
-        RESET,   U_NA,    U_NA,    U_NA,    U_NA,    M_RGB_TOGGLE, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
+        RESET,   U_NA,    U_NA,    U_NA,    U_NA,    ER_TOG,  RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    U_NU,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT,
-        U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    M_RGB_SAVE,    U_NU,    U_NU,    U_NU,    M_RGB_RESET,
+        U_NA,    KC_ALGR, U_NA,    U_NA,    U_NA,    ER_SAV,  ER_TMO,  U_NU,    U_NU,    ER_RST,
         U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
     ),
     #endif
@@ -222,6 +227,10 @@ __attribute__((weak)) void matrix_init_keymap(void) {}
 __attribute__((weak)) void matrix_init_secret(void) {}
 
 void                       matrix_init_user(void) {
+    #ifdef RGBLIGHT_ENABLE
+    matrix_init_rgb_light();
+    #endif
+
     matrix_init_secret();
     matrix_init_keymap();
 }
@@ -267,6 +276,10 @@ void                       matrix_scan_user(void) {
 
     #ifdef ENCODER_ENABLE
     matrix_scan_encoder();
+    #endif
+
+    #ifdef RGBLIGHT_ENABLE
+    matrix_scan_rgb_light();
     #endif
 
     #ifdef LEADER_ENABLE

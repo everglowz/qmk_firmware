@@ -8,7 +8,8 @@ AUTO_SHIFT_ENABLE = yes # Auto Shift
 SRC += everglowz.c \
        encoder_stuff.c \
        oled_stuff.c \
-       process_records.c
+       process_records.c \
+       rgb_stuff.c
 
 # alternative layouts:
 
