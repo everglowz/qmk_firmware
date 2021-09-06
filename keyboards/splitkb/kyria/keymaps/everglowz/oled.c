@@ -180,7 +180,7 @@ static void render_secondary_status(void) {
     oled_write_P(PSTR("Kyria rev1.0\n"), false);    // L1
 
     // build date e.g. 2021-09-03-00:25:17
-    oled_write_P(PSTR("v " QMK_VERSION "\n@" QMK_BUILDDATE "\n"), false);     // L2-4 if not dirty
+    oled_write_P(PSTR("v" QMK_VERSION "\n " QMK_BUILDDATE "\n"), false);    // L2-4 if not dirty
 
     e_render_keyboard_led_state();      // L5
 

@@ -10,6 +10,9 @@
 #ifdef OLED_ENABLE
     #define OLED_DISPLAY_128X64
     // #define OLED_TIMEOUT 15000
+
+    // Required for sharing state in split KBs for OLED display
+    #define SPLIT_LED_STATE_ENABLE
 #endif
 
 #ifdef RGBLIGHT_ENABLE
@@ -25,11 +28,6 @@
     #define RGBLIGHT_EFFECT_CHRISTMAS       // none
     #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
 #endif
-
-// If you are using an Elite C rev3 on the slave side, uncomment the lines below:
-// #define SPLIT_USB_DETECT
-// #define NO_USB_STARTUP_CHECK
-
 
 // ----- Copied from thomasbaart keymap
 // Then modified to suit personal preferences.
@@ -106,6 +104,3 @@ EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, 
 
 // Save memory
 #define NO_ACTION_ONESHOT     // saves 266 bytes
-//#define NO_ACTION_TAPPING     // saves 1922 bytes but I need mod-tap functionality
-
-#define SPLIT_LED_STATE_ENABLE
