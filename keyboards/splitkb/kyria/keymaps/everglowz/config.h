@@ -43,6 +43,7 @@
 // Allows media codes to properly register in macros and rotary encoder code
 #define TAP_CODE_DELAY 10
 
+#define TAPPING_TOGGLE 2    // shorter tapping toggle for keycodes
 
 // ----- Copied from https://github.com/moben/qmk_firmware/blob/master/keyboards/kyria/keymaps/moben/config.h
 // Then modified to suit personal preferences.
@@ -69,14 +70,14 @@
 
 #define XXX KC_NO
 
-#define EL0 XXX
-#define EL1 KC_PGUP
-#define EL2 KC_PGDN
+#define EL0 KC_ASTR
+#define EL1 KC_PLUS
+#define EL2 KC_MINS
 #define ER0 XXX
 #define ER1 KC_HOME
 #define ER2 KC_END
-#define EXL XXX
-#define EXR KC_LEAD
+#define EXL TT(NUM)
+#define EXR TT(NAV)
 
 #define LAYOUT_miryoku( \
     K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, \
