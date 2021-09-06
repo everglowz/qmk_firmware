@@ -21,12 +21,13 @@
     #define RGBLIGHT_VAL_STEP 8
     #define RGBLIGHT_LIMIT_VAL 150
     #define RGBLIGHT_SPLIT
+    #define RGBLIGHT_SLEEP
 
     // Animations I liked
-    // #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
+    #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
     #define RGBLIGHT_EFFECT_KNIGHT          // 0,1,2
-    #define RGBLIGHT_EFFECT_CHRISTMAS       // none
-    #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
+    // #define RGBLIGHT_EFFECT_CHRISTMAS       // none
+    // #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
 #endif
 
 // ----- Copied from thomasbaart keymap

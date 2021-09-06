@@ -3,6 +3,15 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+
+#ifdef ENCODER_ENABLE
+    #include "encoder_stuff.h"
+#endif
+
+#ifdef OLED_ENABLE
+    #include "oled_stuff.h"
+#endif
+
 #include "process_records.h"
 
 
@@ -334,16 +343,12 @@ enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
       U_NP,              U_NP,              KC_DEL,            KC_BSPC,           KC_ENT,            KC_TRNS,           KC_TRNS,           KC_TRNS,           KC_TRNS,           KC_TRNS
 
 
+// ----- Inspired by users/drashna
 
-// ----- Inspired by users/ninjonas & thomasbaart
-
-#ifdef ENCODER_ENABLE
-bool left_encoder_rotated;
-bool right_encoder_rotated;
-uint16_t encoder_rotated_timer;
-
-bool is_alt_tab_active;
-uint16_t alt_tab_timer;
-bool is_ctrl_tab_active;
-uint16_t ctrl_tab_timer;
-#endif
+void          matrix_init_keymap(void);
+void          matrix_init_secret(void);
+void          shutdown_keymap(void);
+void          suspend_power_down_keymap(void);
+void          suspend_wakeup_init_keymap(void);
+void          matrix_scan_keymap(void);
+void          matrix_scan_secret(void);

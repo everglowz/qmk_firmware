@@ -6,7 +6,8 @@ EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
 
 SRC += everglowz.c \
-       encoder.c \
+       encoder_stuff.c \
+       oled_stuff.c \
        process_records.c
 
 # alternative layouts:

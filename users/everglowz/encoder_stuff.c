@@ -6,6 +6,7 @@
 #include "everglowz.h"
 
 #ifdef ENCODER_ENABLE
+
 void left_encoder_cw(void) {
     switch (get_highest_layer(layer_state)) {
         case SYM:
@@ -137,4 +138,19 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 
-#endif
+void matrix_scan_encoder(void) {
+    if (is_alt_tab_active) {
+        if (timer_elapsed(alt_tab_timer) > 1000) {
+            unregister_code(KC_LALT);
+            is_alt_tab_active = false;
+        }
+    }
+    if (is_ctrl_tab_active) {
+        if (timer_elapsed(ctrl_tab_timer) > 1000) {
+            unregister_code(KC_LCTRL);
+            is_ctrl_tab_active = false;
+        }
+    }
+}
+
+#endif  // ENCODER_ENABLE
