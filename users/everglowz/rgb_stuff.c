@@ -28,10 +28,13 @@ void matrix_init_rgb_light(void) {
         idle_timer = timer_read();
     }
 
-    idle_second_counter = 0;                        // Counter for number of seconds keyboard has been idle.
-    key_event_counter = 0;                          // Counter to determine if keys are being held, neutral at 0.
-    rgb_on = rgblight_is_enabled();
-    rgb_time_out_enable = true;                     // Enable RGB timeout by default. Disable using toggle key.
+    idle_second_counter = 0;                // Counter for number of seconds keyboard has been idle.
+    key_event_counter = 0;                  // Counter to determine if keys are being held, neutral at 0.
+    rgb_time_out_enable = true;             // Enable RGB timeout by default. Disable using toggle key.
+}
+
+void keyboard_post_init_rgb_light(void) {
+    rgb_on = rgblight_is_enabled();         // Initialize RGB lighting enable state
 }
 
 void matrix_scan_rgb_light(void) {

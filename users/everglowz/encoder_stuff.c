@@ -58,11 +58,19 @@ void left_encoder_ccw(void) {
             break;
         case FUN:
             // Switch between browser/editor tabs with ctrl tab.
+            if (!is_ctrl_tab_active) {
+                is_ctrl_tab_active = true;
+                register_code(KC_LCTRL);
+            }
             ctrl_tab_timer = timer_read();
             tap_code16(S(KC_TAB));
             break;
         default:
             // Switch between windows on Windows with alt tab.
+            if (!is_alt_tab_active) {
+                is_alt_tab_active = true;
+                register_code(KC_LALT);
+            }
             alt_tab_timer = timer_read();
             tap_code16(S(KC_TAB));
             break;
