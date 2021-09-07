@@ -49,6 +49,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         #endif  // RGBLIGHT_ENABLE
 
+        case M_NO_HOLD_LEFT:
+            if (record->event.pressed) {
+                switch (get_highest_layer(layer_state)) {
+                    case SYM:
+                        layer_invert(QWERTY_NO_HOLD_L);
+                        break;
+                    default:
+                        layer_invert(COLEMAKDH_NO_HOLD_L);
+                }
+            }
+            break;
+
+        case M_NO_HOLD_RIGHT:
+            if (record->event.pressed) {
+                switch (get_highest_layer(layer_state)) {
+                    case MOUSE:
+                        layer_invert(QWERTY_NO_HOLD_R);
+                        break;
+                    default:
+                        layer_invert(COLEMAKDH_NO_HOLD_R);
+                }
+            }
+            break;
+
         default:
             // Anything we don't handle, we let the default code handle it.
             return true;

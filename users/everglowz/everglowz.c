@@ -302,9 +302,9 @@ void matrix_scan_leader(void) {
         leading = false;
         leader_end();
 
-        SEQ_TWO_KEYS(KC_K, KC_V) {
-            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " [" QMK_BUILDDATE "]");
-        }
+        // SEQ_TWO_KEYS(KC_K, KC_V) {
+        //     SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " [" QMK_BUILDDATE "]");
+        // }
 
         // SEQ_TWO_KEYS(KC_G, KC_A) {
         //     SEND_STRING("git add .");

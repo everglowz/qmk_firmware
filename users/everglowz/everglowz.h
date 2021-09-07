@@ -346,6 +346,8 @@ enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
       KC_Z,              KC_X,              KC_C,              KC_D,              KC_V,              KC_TRNS,           KC_TRNS,           KC_TRNS,           KC_TRNS,           KC_TRNS, \
       U_NP,              U_NP,              KC_DEL,            KC_BSPC,           KC_ENT,            KC_TRNS,           KC_TRNS,           KC_TRNS,           KC_TRNS,           KC_TRNS
 
+// ================ END Miryoku code with moben mod
+
 
 // ----- Inspired by users/drashna
 
@@ -356,3 +358,4 @@ void          suspend_power_down_keymap(void);
 void          suspend_wakeup_init_keymap(void);
 void          matrix_scan_keymap(void);
 void          matrix_scan_secret(void);
+void          matrix_scan_leader(void);

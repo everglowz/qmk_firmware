@@ -43,28 +43,19 @@
 // Allows media codes to properly register in macros and rotary encoder code
 #define TAP_CODE_DELAY 10
 
-#define TAPPING_TOGGLE 2    // shorter tapping toggle for keycodes
+#define TAPPING_TOGGLE 1    // shorter tapping toggle for keycodes
 
 // ----- Copied from https://github.com/moben/qmk_firmware/blob/master/keyboards/kyria/keymaps/moben/config.h
 // Then modified to suit personal preferences.
 
-#define GML COLEMAKDH_NO_HOLD_L
-#define GMR COLEMAKDH_NO_HOLD_R
-#define QML QWERTY_NO_HOLD_L
-#define QMR QWERTY_NO_HOLD_R
+#define TGL TG(COLEMAKDH_NO_HOLD_L)
+#define TGR TG(COLEMAKDH_NO_HOLD_R)
+#define TQL TG(QWERTY_NO_HOLD_L)
+#define TQR TG(QWERTY_NO_HOLD_R)
 
 // To toggle between BASE layer and other default layers
-#define GKF BASE
-#define QKF QWERTY
-
-#define TGL TG(GML)
-#define TGR TG(GMR)
-#define TQL TG(QML)
-#define TQR TG(QMR)
-
-// To toggle between BASE layer and other default layers
-#define DFG DF(GKF)
-#define DFQ DF(QKF)
+#define DFG DF(BASE)
+#define DFQ DF(QWERTY)
 
 // ----- Copied from manna-harbour_miryoku keymap. Then modified to suit personal preferences.
 
@@ -73,12 +64,17 @@
 #define EL0 KC_ASTR
 #define EL1 KC_PLUS
 #define EL2 KC_MINS
-#define ER0 XXX
+#define EL3 TT(SYM)
+#define EL4 TT(NUM)
+#define ER0 KC_LEAD
 #define ER1 KC_HOME
 #define ER2 KC_END
-#define EXL TT(NUM)
-#define EXR TT(NAV)
+#define ER3 XXX
+#define ER4 XXX
+#define EB1 M_NO_HOLD_LEFT
+#define EB2 M_NO_HOLD_RIGHT
 
+// Using the MIRYOKU_MAPPING_EXTENDED_THUMBS version
 #define LAYOUT_miryoku( \
     K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, \
     K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, \
@@ -88,8 +84,8 @@
 LAYOUT( \
 EL0, K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, ER0, \
 EL1, K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, ER1, \
-EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, ER2, \
-               DFG, K32, K33, K34, EXL,      EXR, K35, K36, K37, DFQ \
+EL2, K20, K21, K22, K23, K24, EL3, EL4,      ER4, ER3, K25, K26, K27, K28, K29, ER2, \
+               DFG, EB1, K32, K33, K34,      K35, K36, K37, EB2, DFQ \
 )
 
 
