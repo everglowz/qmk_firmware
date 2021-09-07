@@ -1,5 +1,4 @@
 // Copyright 2021 Everglowz
-// Inspired by users/ninjonas
 
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
@@ -8,7 +7,9 @@
 
 #ifdef OLED_ENABLE
 
-oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
+oled_rotation_t oled_init_keymap(oled_rotation_t rotation) { return OLED_ROTATION_180; }
+
+// Inspired by users/ninjonas
 
 void e_oled_white_space(void) {
     oled_write_P(PSTR(" "), false);
@@ -180,7 +181,7 @@ static void render_secondary_status(void) {
     oled_write_P(PSTR("Kyria rev1.0\n"), false);    // L1
 
     // build date e.g. 2021-09-03-00:25:17
-    oled_write_P(PSTR("v " QMK_VERSION "\n@" QMK_BUILDDATE "\n"), false);     // L2-4 if not dirty
+    oled_write_P(PSTR("v" QMK_VERSION "\n " QMK_BUILDDATE "\n"), false);    // L2-4 if not dirty
 
     e_render_keyboard_led_state();      // L5
 
@@ -189,7 +190,7 @@ static void render_secondary_status(void) {
     #endif
 }
 
-void oled_task_user(void) {
+void oled_task_keymap(void) {
     // Limits for my 128x64 OLED display:
     // 8? lines, 20 chars per line
 

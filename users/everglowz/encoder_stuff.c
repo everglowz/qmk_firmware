@@ -6,6 +6,7 @@
 #include "everglowz.h"
 
 #ifdef ENCODER_ENABLE
+
 void left_encoder_cw(void) {
     switch (get_highest_layer(layer_state)) {
         case SYM:
@@ -57,11 +58,19 @@ void left_encoder_ccw(void) {
             break;
         case FUN:
             // Switch between browser/editor tabs with ctrl tab.
+            if (!is_ctrl_tab_active) {
+                is_ctrl_tab_active = true;
+                register_code(KC_LCTRL);
+            }
             ctrl_tab_timer = timer_read();
             tap_code16(S(KC_TAB));
             break;
         default:
             // Switch between windows on Windows with alt tab.
+            if (!is_alt_tab_active) {
+                is_alt_tab_active = true;
+                register_code(KC_LALT);
+            }
             alt_tab_timer = timer_read();
             tap_code16(S(KC_TAB));
             break;
@@ -133,8 +142,27 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
 
+#ifdef RGBLIGHT_ENABLE
+    post_encoder_update_rgb_light();
+#endif
+
     // Do not run keyboard level encoder behavior
     return false;
 }
 
-#endif
+void matrix_scan_encoder(void) {
+    if (is_alt_tab_active) {
+        if (timer_elapsed(alt_tab_timer) > 1000) {
+            unregister_code(KC_LALT);
+            is_alt_tab_active = false;
+        }
+    }
+    if (is_ctrl_tab_active) {
+        if (timer_elapsed(ctrl_tab_timer) > 1000) {
+            unregister_code(KC_LCTRL);
+            is_ctrl_tab_active = false;
+        }
+    }
+}
+
+#endif  // ENCODER_ENABLE

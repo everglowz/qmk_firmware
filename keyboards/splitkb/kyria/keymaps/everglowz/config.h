@@ -10,6 +10,9 @@
 #ifdef OLED_ENABLE
     #define OLED_DISPLAY_128X64
     // #define OLED_TIMEOUT 15000
+
+    // Required for sharing state in split KBs for OLED display
+    #define SPLIT_LED_STATE_ENABLE
 #endif
 
 #ifdef RGBLIGHT_ENABLE
@@ -18,18 +21,16 @@
     #define RGBLIGHT_VAL_STEP 8
     #define RGBLIGHT_LIMIT_VAL 150
     #define RGBLIGHT_SPLIT
+    #define RGBLIGHT_SLEEP
 
     // Animations I liked
-    // #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
+    #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
     #define RGBLIGHT_EFFECT_KNIGHT          // 0,1,2
     #define RGBLIGHT_EFFECT_CHRISTMAS       // none
-    #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
+    // #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
+
+    #define RGB_DEFAULT_TIME_OUT 70         // RGB timeout in seconds
 #endif
-
-// If you are using an Elite C rev3 on the slave side, uncomment the lines below:
-// #define SPLIT_USB_DETECT
-// #define NO_USB_STARTUP_CHECK
-
 
 // ----- Copied from thomasbaart keymap
 // Then modified to suit personal preferences.
@@ -42,41 +43,38 @@
 // Allows media codes to properly register in macros and rotary encoder code
 #define TAP_CODE_DELAY 10
 
+#define TAPPING_TOGGLE 1    // shorter tapping toggle for keycodes
 
 // ----- Copied from https://github.com/moben/qmk_firmware/blob/master/keyboards/kyria/keymaps/moben/config.h
 // Then modified to suit personal preferences.
 
-#define GML COLEMAKDH_NO_HOLD_L
-#define GMR COLEMAKDH_NO_HOLD_R
-#define QML QWERTY_NO_HOLD_L
-#define QMR QWERTY_NO_HOLD_R
+#define TGL TG(COLEMAKDH_NO_HOLD_L)
+#define TGR TG(COLEMAKDH_NO_HOLD_R)
+#define TQL TG(QWERTY_NO_HOLD_L)
+#define TQR TG(QWERTY_NO_HOLD_R)
 
 // To toggle between BASE layer and other default layers
-#define GKF BASE
-#define QKF QWERTY
-
-#define TGL TG(GML)
-#define TGR TG(GMR)
-#define TQL TG(QML)
-#define TQR TG(QMR)
-
-// To toggle between BASE layer and other default layers
-#define DFG DF(GKF)
-#define DFQ DF(QKF)
+#define DFG DF(BASE)
+#define DFQ DF(QWERTY)
 
 // ----- Copied from manna-harbour_miryoku keymap. Then modified to suit personal preferences.
 
 #define XXX KC_NO
 
-#define EL0 XXX
-#define EL1 KC_PGUP
-#define EL2 KC_PGDN
-#define ER0 XXX
+#define EL0 KC_ASTR
+#define EL1 KC_PLUS
+#define EL2 KC_MINS
+#define EL3 TT(SYM)
+#define EL4 TT(NUM)
+#define ER0 KC_LEAD
 #define ER1 KC_HOME
 #define ER2 KC_END
-#define EXL XXX
-#define EXR KC_LEAD
+#define ER3 XXX
+#define ER4 XXX
+#define EB1 M_NO_HOLD_LEFT
+#define EB2 M_NO_HOLD_RIGHT
 
+// Using the MIRYOKU_MAPPING_EXTENDED_THUMBS version
 #define LAYOUT_miryoku( \
     K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, \
     K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, \
@@ -86,8 +84,8 @@
 LAYOUT( \
 EL0, K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09, ER0, \
 EL1, K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19, ER1, \
-EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, ER2, \
-               DFG, K32, K33, K34, EXL,      EXR, K35, K36, K37, DFQ \
+EL2, K20, K21, K22, K23, K24, EL3, EL4,      ER4, ER3, K25, K26, K27, K28, K29, ER2, \
+               DFG, EB1, K32, K33, K34,      K35, K36, K37, EB2, DFQ \
 )
 
 
@@ -106,6 +104,3 @@ EL2, K20, K21, K22, K23, K24, TQL, TGL,      TGR, TQR, K25, K26, K27, K28, K29, 
 
 // Save memory
 #define NO_ACTION_ONESHOT     // saves 266 bytes
-//#define NO_ACTION_TAPPING     // saves 1922 bytes but I need mod-tap functionality
-
-#define SPLIT_LED_STATE_ENABLE
