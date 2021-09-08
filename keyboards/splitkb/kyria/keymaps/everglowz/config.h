@@ -26,7 +26,7 @@
     // Animations I liked
     #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
     #define RGBLIGHT_EFFECT_KNIGHT          // 0,1,2
-    #define RGBLIGHT_EFFECT_CHRISTMAS       // none
+    // #define RGBLIGHT_EFFECT_CHRISTMAS       // none
     // #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
 
     #define RGB_DEFAULT_TIME_OUT 70         // RGB timeout in seconds
@@ -61,15 +61,15 @@
 
 #define XXX KC_NO
 
-#define EL0 KC_ASTR
-#define EL1 KC_PLUS
-#define EL2 KC_MINS
+#define EL0 XXX
+#define EL1 KC_LSFT
+#define EL2 KC_LCTL
 #define EL3 TT(SYM)
 #define EL4 TT(NUM)
 #define ER0 KC_LEAD
 #define ER1 KC_HOME
 #define ER2 KC_END
-#define ER3 XXX
+#define ER3 TT(VIEWER_FULL)
 #define ER4 XXX
 #define EB1 M_NO_HOLD_LEFT
 #define EB2 M_NO_HOLD_RIGHT

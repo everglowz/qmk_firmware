@@ -6,8 +6,8 @@
 // Copied from https://github.com/moben/qmk_firmware/blob/master/users/manna-harbour_miryoku/manna-harbour_miryoku.c
 // This is manna-harbour_miryoku's user file as modified by moben to support extra no tap-hold layers.
 //
-// Evergloz mods:
-// - Added ER_SAV, ER_RST, ER_TOG to media layer
+// Everglowz mods:
+// - Added ER_SAV, ER_RST, ER_TOG, ER_TMO to media layer
 
 #define m_layout_expand(...) LAYOUT_miryoku(__VA_ARGS__)
 #define m_layout(x) [x] = m_layout_expand(MIRYOKU_TABLE_ ## x)
@@ -301,6 +301,7 @@ void                       matrix_scan_user(void) {
 #ifdef LEADER_ENABLE
 
 LEADER_EXTERNS();
+
 void matrix_scan_leader(void) {
     LEADER_DICTIONARY() {
         leading = false;
@@ -310,18 +311,21 @@ void matrix_scan_leader(void) {
         //     SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION " [" QMK_BUILDDATE "]");
         // }
 
-        // SEQ_TWO_KEYS(KC_G, KC_A) {
-        //     SEND_STRING("git add .");
-        // }
-        // SEQ_TWO_KEYS(KC_G, KC_D) {
-        //     SEND_STRING("git diff");
-        // }
-        // SEQ_TWO_KEYS(KC_G, KC_L) {
-        //     SEND_STRING("git log");
-        // }
-        // SEQ_TWO_KEYS(KC_G, KC_S) {
-        //     SEND_STRING("git status");
-        // }
+        SEQ_ONE_KEY(KC_A) {
+            SEND_STRING("git add .");
+        }
+        SEQ_ONE_KEY(KC_D) {
+            SEND_STRING("git diff");
+        }
+        SEQ_ONE_KEY(KC_L) {
+            SEND_STRING("git log");
+        }
+        SEQ_ONE_KEY(KC_Y) {
+            SEND_STRING("git lg3");
+        }
+        SEQ_ONE_KEY(KC_S) {
+            SEND_STRING("git status");
+        }
     }
 }
 

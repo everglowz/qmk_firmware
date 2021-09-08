@@ -115,6 +115,9 @@ static void e_render_layer_state(void) {
         case FUN:
             oled_write_P(PSTR("Functions "), true);
             break;
+        case VIEWER_FULL:
+            oled_write_P(PSTR("Viewer    "), true);
+            break;
         default:
             oled_write_P(PSTR("Base      "), false);
     }
