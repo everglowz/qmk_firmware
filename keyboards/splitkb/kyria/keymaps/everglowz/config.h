@@ -24,10 +24,10 @@
     #define RGBLIGHT_SLEEP
 
     // Animations I liked
-    #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
+    // #define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 0,1,2,3,4,5
     #define RGBLIGHT_EFFECT_KNIGHT          // 0,1,2
     // #define RGBLIGHT_EFFECT_CHRISTMAS       // none
-    // #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
+    #define RGBLIGHT_EFFECT_TWINKLE         // 0,1,2,3,4,5
 
     #define RGB_DEFAULT_TIME_OUT 70         // RGB timeout in seconds
 #endif

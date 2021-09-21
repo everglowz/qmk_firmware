@@ -263,6 +263,9 @@ void suspend_power_down_user(void) {
 __attribute__((weak)) void suspend_wakeup_init_keymap(void) {}
 
 void                       suspend_wakeup_init_user(void) {
+#ifdef OLED_ENABLE
+    oled_on();
+#endif
     suspend_wakeup_init_keymap();
 }
 
