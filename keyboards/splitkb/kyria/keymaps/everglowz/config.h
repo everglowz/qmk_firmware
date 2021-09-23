@@ -9,7 +9,7 @@
 
 #ifdef OLED_ENABLE
     #define OLED_DISPLAY_128X64
-    // #define OLED_TIMEOUT 15000
+    #define OLED_TIMEOUT 60000
 
     // Required for sharing state in split KBs for OLED display
     #define SPLIT_LED_STATE_ENABLE

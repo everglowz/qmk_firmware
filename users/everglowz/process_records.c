@@ -9,6 +9,10 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *
 __attribute__((weak)) bool process_record_secrets(uint16_t keycode, keyrecord_t *record) { return true; }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef OLED_ENABLE
+    process_record_user_oled(keycode, record);
+#endif  // OLED
+
     if (!(process_record_keymap(keycode, record) && process_record_secrets(keycode, record)
 #ifdef RGBLIGHT_ENABLE
           && process_record_user_rgb_light(keycode, record)
