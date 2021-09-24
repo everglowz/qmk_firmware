@@ -6,16 +6,6 @@
 
 #ifdef OLED_ENABLE
 
-uint32_t oled_timer = 0;
-
-bool process_record_user_oled(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        oled_timer = timer_read32();
-    }
-
-    return true;
-}
-
 __attribute__((weak)) oled_rotation_t oled_init_keymap(oled_rotation_t rotation) { return rotation; }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -25,13 +15,6 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 __attribute__((weak)) void oled_task_keymap(void) {}
 
 void oled_task_user(void) {
-    if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
-        oled_off();
-        return;
-    } else {
-        oled_on();
-    }
-
     oled_task_keymap();
 }
 

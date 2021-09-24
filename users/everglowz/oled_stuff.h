@@ -8,7 +8,6 @@
 
 #include "oled_driver.h"
 
-bool            process_record_user_oled(uint16_t keycode, keyrecord_t *record);
 oled_rotation_t oled_init_keymap(oled_rotation_t rotation);
 void            oled_task_keymap(void);
 
